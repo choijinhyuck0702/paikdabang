@@ -521,6 +521,7 @@
         }
         .btn-top::before{
             /* content: '▲'; */
+            box-sizing: border-box;
             content: '';
             display: block;
             width: 10px;
@@ -548,6 +549,9 @@
 
         /* 테블릿 스타일 */
         @media (min-width:768px){
+            .item-sec{
+                max-height: initial;
+            }
             .item-sec .inner{
                 padding-top:20px;
             }
