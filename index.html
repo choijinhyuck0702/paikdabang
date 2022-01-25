@@ -42,6 +42,7 @@
             font-size:16px;
             color:#222;
             line-height:1;
+            scroll-behavior: smooth;
         }
         .clearfix::after{
             content:'';
@@ -117,7 +118,14 @@
         .wrap{            
             overflow:hidden;
         }
-
+        .header{
+            position: fixed;
+            left:0;
+            right:0;
+            top:0;
+            z-index: 9998;
+            background-color: #fff;
+        }
         .header .inner{
             display:flex;
             justify-content:space-between;
@@ -204,6 +212,9 @@
         }
         .sub-nav li:last-of-type{
             border-bottom:none;
+        }
+        .main-slider{
+            padding-top:70px;
         }
         .main-slider .container{
             max-width:100%;
@@ -434,6 +445,9 @@
         .footer{
             padding:30px 0;
         }
+        .footer .container{
+            position: relative;
+        }
         .footer .img-box{
             width:180px;
             margin:0 auto 30px;
@@ -441,12 +455,12 @@
         .footer address{
             font-style:normal;
         }
-        .footer ul{
+        .footer address ul{
             display:flex;
             flex-flow:row wrap;
             justify-content:center;
         }
-        .footer li{
+        .footer address li{
             width:100%;
             margin-bottom:10px;
             text-align:center;
@@ -455,10 +469,67 @@
             padding-top:20px;
             text-align:center;
         }
-
-        
-
-
+        .footer .f-site{
+            position:absolute;
+            right: 0;
+            top:0;
+            border:1px solid #666;
+            padding:10px 20px;
+            border-radius: 2px;
+            display: none;
+            cursor: pointer;
+        }
+        .footer .f-site:hover{
+            background-color: #333;
+            color:#fff;
+        }
+        .footer .f-site .f-list{
+            position:absolute;
+            left:0;
+            right:0;
+            bottom:calc(100% + 10px);
+            border:1px solid #666;
+            border-radius: 2px;
+            background-color: #fff;
+            color:#222;
+            display: none;
+        }
+        .footer .f-site .f-list li{
+            padding:10px;
+        }
+        .footer .f-site .f-list li:hover{
+            background-color: #333;
+            color: #fff;
+        }
+        .scr-top{
+            position: fixed;
+            left:0;
+            right:0;
+            bottom:30px;
+        }
+        .btn-top{
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: space-evenly;
+            align-items: center;
+            width:40px;
+            height: 40px;
+            margin:0 0 0 auto;
+            background-color: #ff0;
+            font-weight: 700;
+            font-size:0.5em;
+        }
+        .btn-top::before{
+            /* content: '▲'; */
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-top:0 solid black;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 10px solid #333;
+        }
 
 
         @media (min-width:540px){
@@ -492,19 +563,19 @@
             .fran-store h3{                
                 font-size:2.8em;                
             }
-            .footer li{
+            .footer address li{
                 width:auto;
                 border-right:1px solid #999;
                 padding:0 14px;
             }
-            .footer li:last-child{
+            .footer address li:last-child{
                 border-right:none;
             }
         }
 
 
         /* 데스크탑 스타일 */
-        @media (min-width:1200px){            
+        @media (min-width:1200px){       
             .header .inner{
                 height:120px;
             }
@@ -521,17 +592,50 @@
             .nav{
                 position:static;
             }
+            .main-slider{
+                padding-top:120px;
+            }     
             .main-nav>li{
                 width:auto;
                 margin-left:80px;
                 border-bottom:none;
                 padding:0;
+                position: relative;
             }
             .main-nav>li>a{
                 padding:0;
             }
+            .main-nav>li::before{
+                content: '';
+                display: block;
+                position: fixed;
+                left:0;
+                right: 0;
+                top:120px;
+                z-index: 10;
+                height: 0px;
+                background-color: #ff0;
+                transition: 0.15s;
+            }
+            .main-nav>li.active::before{
+                display: block;
+                height: 160px;
+            }
             .sub-nav{
-                display:none !important;
+                display: none;
+                position: absolute;
+                left:-40px;
+                right:-40px;
+                top:50px;
+                z-index:11;
+                margin:0;
+                padding:0;
+            }
+            .sub-nav li{
+                margin:0;
+                border-bottom: none;
+                padding:8px 0;
+                text-align: center;
             }
             .coffee-story p{
                 display:block;           
@@ -581,7 +685,6 @@
             .dessert-fran-store article:nth-child(2){
                 flex:48;
                 order:1;
-                margin-right:10px;
             }
             .fran-store .inner{
                 flex-direction:column;
@@ -615,6 +718,9 @@
             }
             .dessert .btn-hover{
                 margin-top:30px;
+            }
+            .footer .f-site{
+                display: block;
             }
         }
     </style>
@@ -665,7 +771,6 @@
                                         <li><a href="#">신메뉴</a></li>
                                         <li><a href="#">커피</a></li>
                                         <li><a href="#">음료</a></li>
-                                        <li><a href="#">음료</a></li>
                                         <li><a href="#">아이스크림/디저트</a></li>
                                         <li><a href="#">빽스치노</a></li>
                                     </ul>
@@ -703,7 +808,7 @@
                 </div>
             </div>
         </header>
-        <section class="sec main-slider">
+        <section class="sec main-slider" id="top">
             <div class="container">
                 <div class="slider">
                     <div>
@@ -917,8 +1022,34 @@
                         COPYRIGHTⓒ 2018 THEBORN KOREA INC. ALL RIGHTS RESERVED
                     </div>
                 </address>
+                <div class="f-site">
+                    <span>패밀리사이트 바로가기</span>
+                    <ul class="f-list">
+                        <li><a href="#">더본코리아</a></li>
+                        <li><a href="#">창업센터</a></li>
+                        <li><a href="#">새마을식당</a></li>
+                        <li><a href="#">한신포차</a></li>
+                        <li><a href="#">역전우동</a></li>
+                        <li><a href="#">백스비어</a></li>
+                        <li><a href="#">롤링파스타</a></li>
+                        <li><a href="#">인생설렁탕</a></li>
+                        <li><a href="#">미정국수</a></li>
+                        <li><a href="#">리춘시장</a></li>
+                        <li><a href="#">원조쌈밥집</a></li>
+                        <li><a href="#">돌배기집</a></li>
+                        <li><a href="#">백철판</a></li>
+                        <li><a href="#">호텔더본</a></li>
+                    </ul>
+                </div>
             </div>
         </footer>
+        <section class="scr-top">
+            <div class="container">
+                <a href="#top" class="btn-top">
+                    <span>TOP</span>
+                </a>
+            </div>
+        </section>
     </section>
     <!-- jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -932,9 +1063,17 @@
         })
         $('.main-nav>li').on({
             'click':function(){
-                $(this).children('.sub-nav').slideToggle();
+                $('.main-nav>li').not($(this)).children('.sub-nav').slideUp(200);
+                $(this).children('.sub-nav').slideToggle(200);
+                $(this).toggleClass('active');
             }
         })
+        $('.f-site').on({
+           'click':function(){ 
+                $('.f-list').slideToggle(200);
+           }
+        });
+        
     </script>
 </body>
 </html>
