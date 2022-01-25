@@ -22,7 +22,7 @@ h1,h2,h3,h4,h5,h6,strong{
     font-weight:400;
     font-size:inherit;
 }
-img,span,video,audio,label,input,textarea,select,iframe{
+img,video,audio,label,input,textarea,select,iframe,article,aside,address,picture{
     display:block;
 }
 
